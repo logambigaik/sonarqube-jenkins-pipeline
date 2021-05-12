@@ -56,8 +56,30 @@ Pipeline Syntax:
 tool name: 'maven', type: 'maven'
 ```
 
-Script:
-======
+Declarative pipeline
+====================
+
+pipeline{
+    agent any
+    stages{
+        stage('SCM'){
+            steps{
+            }
+         }
+       }
+    }
+
+Scripted pipeline:
+==================
+
+
+Scripted pipeline is very useful when you play with paramter values.
+
+![image](https://user-images.githubusercontent.com/54719289/118032399-8d5ed700-b35f-11eb-8e6a-f1906c65887c.png)
+
+In this scenario, scripted pipeline helps lot.
+
+
 
 ```
 node {
