@@ -9,6 +9,7 @@
             wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo && sudo rpm --import http://pkg.jenkins.io/redhat-stable/jenkins.io.key  && sudo yum install jenkins -y && sudo service jenkins start
 
                   
+# Step 1: Sonarqube setup:
 
 # Check the log if its failed, change the owner with R option (-R is for chaging ownership to all directories under sonarqube)
 
@@ -35,15 +36,17 @@
 ```
 
 
-# Jenkins Setup:
+# Step 2: Jenkins Setup:
 
 ![image](https://user-images.githubusercontent.com/54719289/118026408-a7e18200-b358-11eb-8c2d-100fa0416c7b.png)
 
-# Change Password as admin123
+ >> Change Password as admin123
 
-# Create Pipeline project:
 
-# Add Maven script with tools -pipeline syntax:
+
+# Step 3: Install Maven 
+
+# Step 4 Create Pipeline Project in jenkinsAdd Maven script with tools -pipeline syntax:
 
 ![image](https://user-images.githubusercontent.com/54719289/118027992-779ae300-b35a-11eb-871b-1fe5f090a044.png)
 
@@ -55,6 +58,7 @@ tool name: 'maven', type: 'maven'
 
 Script:
 ======
+
 ```
 node {
     def MAVEN_HOME = tool name: 'maven', type: 'maven'
@@ -62,3 +66,26 @@ node {
 }
 
 ```
+![image](https://user-images.githubusercontent.com/54719289/118029381-05c39900-b35c-11eb-987b-6b8cc12ad6a6.png)
+
+```
+node {
+    def MAVEN_HOME = tool name: 'maven', type: 'maven'
+    def MAVEN_CMD = "${MAVEN_HOME}/bin/mvn"
+    
+    stage('SCM'){
+        git branch: 'main', url: 'https://github.com/logambigaik/springboo-without-db.git'
+        
+    }
+    stage('Build Artifact'){
+        sh "${MAVEN_CMD} clean package"
+    }
+}
+
+```
+
+![image](https://user-images.githubusercontent.com/54719289/118030653-7cad6180-b35d-11eb-89f0-10e35f34a7d4.png)
+
+```
+
+
